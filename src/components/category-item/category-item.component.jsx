@@ -1,3 +1,4 @@
+import React from 'react';
 import ContainerBody from '../category-body/category-body.component';
 
 import './category-item.styles.scss'
