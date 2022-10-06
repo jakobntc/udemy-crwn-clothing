@@ -23,7 +23,6 @@ const Navigation = () => {
             SIGN IN
           </Link>
         </div>
-        <div className="nav-link">Shopping Cart</div>
       </div>
       <Outlet />
     </Fragment>
