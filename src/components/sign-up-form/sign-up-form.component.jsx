@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 
 const initialFormFields = {
-  displayName: "Sam",
+  displayName: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -11,6 +12,8 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(initialFormFields); // Creating a state variable
   const { displayName, email, password, confirmPassword } = formFields; // Destructoring
 
+  console.log(formFields);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     console.log("Event for ", name, " with new value ", value);
@@ -18,10 +21,16 @@ const SignUpForm = () => {
     setFormFields({ ...formFields, [name]: value }); // ... = Foreach element of formFields 
   }
 
+  const handleSubmit = async (event) => {
+    const { email, password } = event;
+    const something = await createAuthUserWithEmailAndPassword(email, password);
+    console.log(something);
+  }
+
   return (
     <div>
       <h1>Sign up with your email and password</h1>
-      <form onSubmit={() => { }}>
+      <form onSubmit={(event) => {handleSubmit(event)}}>
         <label>Display Name</label>
         <input type="text" required onChange={handleChange} name="displayName" value={displayName} />
 
