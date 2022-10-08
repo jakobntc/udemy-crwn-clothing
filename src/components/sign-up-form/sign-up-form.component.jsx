@@ -23,8 +23,6 @@ const SignUpForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log("Event for ", name, " with new value ", value);
-
     setFormFields({ ...formFields, [name]: value }); // ... = Foreach element of formFields 
   }
 

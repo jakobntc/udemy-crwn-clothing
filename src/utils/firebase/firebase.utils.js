@@ -5,6 +5,7 @@ import {
   signInWithRedirect,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -39,10 +40,11 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 // Sign in with email & password 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
-
-  console.log("Do you get here?")
-
   return await createUserWithEmailAndPassword(auth, email, password);
+}
+export const signUserInWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
 }
 
 
@@ -52,20 +54,16 @@ export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {},
 ) => {
-  console.log("Got inside createUserDocumentFromAuth")
   if (!userAuth) return;
-  console.log("Got past fist if")
 
   const userDocRef = doc(db, "users", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    console.log("Got past second if")
     const { displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
-      console.log("Inside try")
       await setDoc(userDocRef, {
         displayName,
         email,
@@ -80,4 +78,7 @@ export const createUserDocumentFromAuth = async (
   return userDocRef;
 }
 
-
+export const getUserFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+  return await getDoc(userDocRef);
+}
