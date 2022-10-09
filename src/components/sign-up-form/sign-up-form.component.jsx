@@ -4,8 +4,6 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import { UserContext } from "../../contexts/user.context";
-
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
@@ -23,8 +21,6 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(initialFormFields); // Creating a state variable
   const { displayName, email, password, confirmPassword } = formFields; // Destructoring
 
-  // Destructoring setCurrentUser function from user.context
-  const { setCurrentUser } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -45,7 +41,6 @@ const SignUpForm = () => {
       // Creating user document in firestore with userAuth
       await createUserDocumentFromAuth(user, { displayName });
       // Setting current user in src/contexts/user.context.jsx
-      setCurrentUser(user);
 
       setFormFields(initialFormFields);
     } catch (error) {
