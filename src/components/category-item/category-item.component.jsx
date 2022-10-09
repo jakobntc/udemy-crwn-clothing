@@ -14,7 +14,7 @@ const CategoryItem = ({ category, key }) => {
           backgroundImage: `url(${imageUrl})`
         }}
       />
-      <ContainerBody id={key} title={title} message="SHOP NOW" />
+      <ContainerBody id={key} title={title} />
     </div>
   )
 }
