@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+
+import { UserContext } from "../../contexts/user.context";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
@@ -21,6 +23,9 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(initialFormFields); // Creating a state variable
   const { displayName, email, password, confirmPassword } = formFields; // Destructoring
 
+  // Destructoring setCurrentUser function from user.context
+  const { setCurrentUser } = useContext(UserContext);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value }); // ... = Foreach element of formFields 
@@ -35,15 +40,21 @@ const SignUpForm = () => {
     }
 
     try {
+      // Creating user auth in firebase
       const { user } = await createAuthUserWithEmailAndPassword(email, password);
+      // Creating user document in firestore with userAuth
       await createUserDocumentFromAuth(user, { displayName });
+      // Setting current user in src/contexts/user.context.jsx
+      setCurrentUser(user);
+
       setFormFields(initialFormFields);
     } catch (error) {
-      if (error.cod3e === "auth/email-already-in-use") {
-        alert("Cannot create user, email already in use.")
-      } else {
-        console.log(error.code);
-        console.log(error.message);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          alert("Cannot create user, email already in use.")
+        default:
+          console.log(error.code);
+          console.log(error.message);
       }
     }
   }
