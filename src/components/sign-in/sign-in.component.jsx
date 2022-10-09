@@ -6,7 +6,7 @@ import {
   getUserFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import "./log-in.styles.scss"
+import "./sign-in.styles.scss"
 
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
@@ -17,7 +17,7 @@ const initialFormValues = {
   password: "",
 }
 
-const LogIn = () => {
+const SignIn = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { email, password } = formValues;
 
@@ -97,4 +97,4 @@ const LogIn = () => {
 }
 
 
-export default LogIn
+export default SignIn

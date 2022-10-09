@@ -4,21 +4,21 @@ import {
   createUserDocumentFromAuth
 } from "../../utils/firebase/firebase.utils";
 
-import "./sign-in.styles.scss"
+import "./authentication.styles.scss"
 
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
-import LogIn from "../../components/log-in/log-in.component";
+import SignIn from "../../components/sign-in/sign-in.component";
 
 
-const SignIn = () => {
+const Authentication = () => {
   return (
-    <div className="sign-in-container">
+    <div className="authentication-container">
       {/* <h1>Sign in page</h1> */}
-      <LogIn />
+      <SignIn />
       <SignUpForm />
     </div>
   );
 }
 
 
-export default SignIn;
+export default Authentication;
